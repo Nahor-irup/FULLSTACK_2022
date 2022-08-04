@@ -5,10 +5,27 @@ const Anecdotes = (props) => {
 
   return (
     <div>
+      <h1>Anecdotes of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {voteArray[selected]} votes</p>
     </div>
   )
+}
+
+const MostViewd = (props) => {
+  const { anecdotes, voteArray } = props
+
+  const highest = Math.max(...voteArray)
+  const index = voteArray.indexOf(highest)
+  const anc = anecdotes[index]
+  if (highest !== 0)
+    return (
+      <div>
+        <h1>Anecdotes with most votes</h1>
+        {anc} <br></br>
+        has {highest} vote
+      </div>
+    )
 }
 
 const App = () => {
@@ -45,6 +62,7 @@ const App = () => {
         <Anecdotes anecdotes={anecdotes} selected={selected} voteArray={voteArray} />
         <button onClick={handleVote}>vote</button>
         <button onClick={handleClick}>next anecdote</button>
+        <MostViewd anecdotes={anecdotes} voteArray={voteArray} />
       </div>
     )
   }
