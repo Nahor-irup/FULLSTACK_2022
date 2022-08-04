@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
 const Anecdotes = (props) => {
-  const { anecdotes, selected } = props
+  const { anecdotes, selected, voteArray } = props
+
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <p>has {voteArray[selected]} votes</p>
     </div>
   )
 }
@@ -21,16 +23,27 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+
+  const varray = Array(anecdotes.length).fill(0);
+
+  const [voteArray, setVoteArray] = useState(varray);
+
+  const handleVote = () => {
+    const copy = [...voteArray]
+    copy[selected] += 1
+    setVoteArray(copy)
+  }
   const handleClick = () => {
     setSelected(selected + 1)
   }
-  console.log(selected)
+
   if (selected === 7) {
     setSelected(0)
   } else {
     return (
       <div>
-        <Anecdotes anecdotes={anecdotes} selected={selected} />
+        <Anecdotes anecdotes={anecdotes} selected={selected} voteArray={voteArray} />
+        <button onClick={handleVote}>vote</button>
         <button onClick={handleClick}>next anecdote</button>
       </div>
     )
